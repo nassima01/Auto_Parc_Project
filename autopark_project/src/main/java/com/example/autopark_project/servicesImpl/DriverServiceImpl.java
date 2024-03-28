@@ -1,18 +1,23 @@
 package com.example.autopark_project.servicesImpl;
 
 import com.example.autopark_project.entities.Driver;
-import com.example.autopark_project.entities.DriverUnavailability;
+import com.example.autopark_project.entities.Trip;
 import com.example.autopark_project.exceptions.DriverNotFoundException;
 import com.example.autopark_project.repositories.DriverRepository;
 import com.example.autopark_project.services.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Component
 @Service
 public class DriverServiceImpl implements DriverService {
 
@@ -66,28 +71,4 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
-    @Override
-    public List<Driver> getAvailableDriversInPeriod(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<Driver> allDrivers = driverRepository.findAll();
-        List<Driver> availableDrivers = new ArrayList<>();
-
-        for (Driver driver : allDrivers) {
-            if (isDriverAvailableInPeriod(driver, startDateTime, endDateTime)) {
-                availableDrivers.add(driver);
-            }
-        }
-
-        return availableDrivers;
-    }
-    private boolean isDriverAvailableInPeriod(Driver driver, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        for (DriverUnavailability availability : driver.getUnavailabilities()) {
-            LocalDateTime driverStartDateTime = availability.getStart();
-            LocalDateTime driverEndDateTime = availability.getEnd();
-
-            if (!(startDateTime.isAfter(driverEndDateTime) || endDateTime.isBefore(driverStartDateTime))) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

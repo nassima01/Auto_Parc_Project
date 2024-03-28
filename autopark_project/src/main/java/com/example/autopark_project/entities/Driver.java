@@ -34,9 +34,6 @@ public class Driver {
     @OneToMany(mappedBy = "driver")
     private Set<LicenceCategory> driverLicenses = new HashSet<>();
 
-    @OneToMany(mappedBy = "driver", orphanRemoval = true, cascade = CascadeType.ALL)
-    private Set<DriverUnavailability> unavailabilities;
-
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
-    private Set<Trip> tripSet;
+    private Set<Trip> trips;
 }

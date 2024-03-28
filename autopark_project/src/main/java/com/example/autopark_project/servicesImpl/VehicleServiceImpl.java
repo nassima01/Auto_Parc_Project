@@ -1,16 +1,23 @@
 package com.example.autopark_project.servicesImpl;
 
-import com.example.autopark_project.entities.AvailabilityStatus;
 import com.example.autopark_project.entities.Vehicle;
+import com.example.autopark_project.entities.Trip;
 import com.example.autopark_project.exceptions.VehicleNotFoundException;
 import com.example.autopark_project.repositories.VehicleRepository;
 import com.example.autopark_project.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Component
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
@@ -63,9 +70,4 @@ public class VehicleServiceImpl implements VehicleService {
         }
     }
 
-
-    @Override
-    public List<Vehicle> getAvailableVehicles() {
-        return vehicleRepository.findByAvailability(AvailabilityStatus.valueOf("Available"));
-    }
 }

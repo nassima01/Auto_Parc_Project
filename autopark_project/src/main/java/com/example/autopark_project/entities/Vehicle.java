@@ -49,6 +49,7 @@ public class Vehicle {
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<TechnicalVisit> technicalVisits;
 
+
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
     private Set<Trip> trips = new HashSet<>();
 }
